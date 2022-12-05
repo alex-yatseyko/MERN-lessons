@@ -1,4 +1,5 @@
 const express = require("express");
+const Notes = require("../models/notesModel");
 
 const router = express.Router();
 
@@ -13,8 +14,19 @@ router.get("/:id", (req, res) => {
 });
 
 // POST a new note
-router.post("/", (req, res) => {
-  //   req.body
+router.post("/", async (req, res) => {
+  const { title, body } = req.body;
+  try {
+    const note = await Notes.create({
+      title,
+      body,
+    });
+    res.status(200).json(note);
+  } catch (e) {
+    res.status(400).json({
+      error: e.message,
+    });
+  }
   res.json({ mssg: "POST a new note" });
 });
 
