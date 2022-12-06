@@ -9,7 +9,7 @@ const getNotes = async (req, res) => {
 };
 
 // Get a single note
-const getNote = async (req, res) => {
+const getSingleNote = async (req, res) => {
   const { id } = req.params;
 
   if (!mongoose.Types.ObjectId.isValid(id)) {
@@ -41,11 +41,55 @@ const createNote = async (req, res) => {
       error: e.message,
     });
   }
-  res.json({ mssg: "POST a new note" });
+  //   res.json({ mssg: "POST a new note" });
+};
+
+// Delete a note
+const deleteNote = async (req, res) => {
+  const { id } = req.params;
+
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(404).json({ error: "There's no note with such id" });
+  }
+
+  const note = await Notes.findOneAndDelete({
+    _id: id,
+  });
+
+  if (!note) {
+    return res.status(404).json({ error: "There's no note with such id" });
+  }
+
+  res.status(200).json(note);
+};
+
+// Update a note
+const updateNote = async (req, res) => {
+  const { id } = req.params;
+
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(404).json({ error: "There's no note with such id" });
+  }
+  const note = await Notes.findOneAndUpdate(
+    {
+      _id: id,
+    },
+    {
+      ...req.body,
+    }
+  );
+
+  if (!note) {
+    return res.status(404).json({ error: "There's no note with such id" });
+  }
+
+  res.status(200).json(note);
 };
 
 module.exports = {
   createNote,
   getNotes,
-  getNote,
+  getSingleNote,
+  deleteNote,
+  updateNote,
 };
