@@ -1,5 +1,6 @@
 import {Link} from 'react-router-dom'
 import { useNotesHook } from '../hooks/useNotesHook'
+import formateDistanceToNow from 'date-fns/formatDistanceToNow'
 
 const NoteDetails = ({ note }) => {
     const { dispatch} = useNotesHook()
@@ -29,9 +30,10 @@ const NoteDetails = ({ note }) => {
                 <Link to="/">
                     <h5>Note Details</h5>
                 </Link>
-                <p>{note.createdAt}</p>
-                <span onClick={handleClick}>Delete</span>
-                <span onClick={handleLike}>Like it!</span>
+                <p>{formateDistanceToNow(new Date(note.createdAt), {addSuffix: true})}</p>
+                {/* <p>{note.createdAt}</p> */}
+                <span className="material-symbols-outlined" onClick={handleClick}>Delete</span>
+                {/* <span onClick={handleLike}>Like it!</span> */}
             </div>
     )
 }

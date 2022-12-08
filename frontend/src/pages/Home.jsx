@@ -24,7 +24,7 @@ const Home = () => {
     }
 
     fetchNotes()
-  }, [])
+  }, [dispatch])
 
   return (
     <div className="home">
