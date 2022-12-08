@@ -1,10 +1,13 @@
 import {useState} from 'react'
-import { json } from 'react-router-dom'
+// import { json } from 'react-router-dom'
+import { useNotesHook } from '../hooks/useNotesHook'
 
 export const NoteForm = () => {
     const [title, setTitle] = useState('')
     const [body, setBody] = useState('')
     const [error, setError] = useState(null)
+
+    const { dispatch} = useNotesHook()
 
     const handleSubmit = async e => {
         e.preventDefault()
@@ -27,6 +30,7 @@ export const NoteForm = () => {
             setBody('')
             setError(null)
             console.log('New note was added', json)
+            dispatch({type: 'CREATE_NOTE', payload: json})
         }
     }
 
