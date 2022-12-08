@@ -18,6 +18,10 @@ const NoteDetails = ({ note }) => {
         }
     }
 
+    const handleLike = () => {
+        console.log('You liked it!')
+    }
+
     return(
             <div className="note-details">
                 <h4>{note.title}</h4>
@@ -27,6 +31,7 @@ const NoteDetails = ({ note }) => {
                 </Link>
                 <p>{note.createdAt}</p>
                 <span onClick={handleClick}>Delete</span>
+                <span onClick={handleLike}>Like it!</span>
             </div>
     )
 }
